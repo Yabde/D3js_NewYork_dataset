@@ -8,7 +8,7 @@
 
     <link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css"/>
     <link rel="stylesheet" href="style.css"/>
-    <link rel="shortcut icon" type="image/ico" href="favicon.ico"/>
+    <link rel="shortcut icon" type="image/ico" href="icones/favicon.ico"/>
     <!-- <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src="//d3js.org/topojson.v1.min.js"></script> -->
     
@@ -18,7 +18,7 @@
     <header class="w-100 pa3 ph5-ns bg-white bb b--black-10">
         <div class="db dt-ns mw9 center w-100">
             <div class="db dtc-ns v-mid tl w-50">
-                <img id="icone" src="bullet.png" height="50vh">
+                <img id="icone" src="icones/bullet.png" height="50vh">
                 <a href="/" class="dib f5 f4-ns fw6 mt0 mb1 link black-70" title="Home">
                     NYPD Shooting Incident Data (Historic)
                 </a>    
@@ -26,8 +26,8 @@
         </div>
     </header>
     
-    <section id="intro" class= "bg-washed-blue"> 
-        <h2>Quelques détails</h2>
+    <section id="intro" class= "bg-washed-blue bb b--black-10"> 
+        <h2>Quelques détails <img id="icone_titre" src="icones/detail.png" height="50vh"></h2>
         
         <!-- <p>Accéder au jeu de données initiale en cliquant <a href="https://data.cityofnewyork.us/api/views/833y-fsy8/rows.csv?accessType=DOWNLOADhttps://data.cityofnewyork.us/Public-Safety/NYPD-Shooting-Incident-Data-Historic-/833y-fsy8">ici</a></p> -->
     
@@ -44,7 +44,7 @@
         
         <p>
             <dl class="lh-title pa4 mt0">
-                <dt class="f6 b">INCIDENT_KEY</dt>
+                <dt class="f6 b mt2">INCIDENT_KEY</dt>
                 <dd class="ml0">Randomly generated persistent ID for each arrest Plain Text</dd>
                 <dt class="f6 b mt2">OCCUR_DATE</dt>
                 <dd class="ml0">Exact date of the shooting incident Date & Time</dd>
@@ -56,38 +56,39 @@
                 <dd class="ml0">CherryPrecinct where the shooting incident occurred Number</dd>
                 <dt class="f6 b mt2">JURISDICTION_CODE</dt>
                 <dd class="ml0">Jurisdiction where the shooting incident occurred. Jurisdiction codes 0(Patrol), 1(Transit) and 2(Housing) represent NYPD whilst codes 3 and more represent non NYPD jurisdictions Number</dd>
-                <dt class="f6 b">LOCATION_DESC</dt>
+                <dt class="f6 b mt2">LOCATION_DESC</dt>
                 <dd class="ml0">Location of the shooting incident Plain Text</dd>
-                <dt class="f6 b">STATISTICAL_MURDER_FLAG</dt>
+                <dt class="f6 b mt2">STATISTICAL_MURDER_FLAG</dt>
                 <dd class="ml0">Shooting resulted in the victim’s death which would be counted as a murder Checkbox</dd>
-                <dt class="f6 b">PERP_AGE_GROUP</dt>
+                <dt class="f6 b mt2">PERP_AGE_GROUP</dt>
                 <dd class="ml0">Perpetrator’s age within a category Plain Text</dd>
-                <dt class="f6 b">PERP_SEX</dt>
+                <dt class="f6 b mt2">PERP_SEX</dt>
                 <dd class="ml0">Perpetrator’s sex description Plain Text</dd>
-                <dt class="f6 b">PERP_RACE</dt>
+                <dt class="f6 b mt2">PERP_RACE</dt>
                 <dd class="ml0">Perpetrator’s race description Plain Text</dd>
-                <dt class="f6 b">VIC_AGE_GROUP</dt>
+                <dt class="f6 b mt2">VIC_AGE_GROUP</dt>
                 <dd class="ml0">Victim’s age within a category Plain Text</dd>
-                <dt class="f6 b">VIC_SEX</dt>
+                <dt class="f6 b mt2">VIC_SEX</dt>
                 <dd class="ml0">Victim’s sex description Plain Text</dd>
-                <dt class="f6 b">VIC_RACE</dt>
+                <dt class="f6 b mt2">VIC_RACE</dt>
                 <dd class="ml0">Victim’s race description Plain Text</dd>
-                <dt class="f6 b">X_COORD_CD</dt>
+                <dt class="f6 b mt2">X_COORD_CD</dt>
                 <dd class="ml0">Midblock X-coordinate for New York State Plane Coordinate System, Long Island Zone, NAD 83, units feet (FIPS 3104) Plain Text</dd>
-                <dt class="f6 b">Y_COORD_CD</dt>
+                <dt class="f6 b mt2">Y_COORD_CD</dt>
                 <dd class="ml0">Midblock Y-coordinate for New York State Plane Coordinate System, Long Island Zone, NAD 83, units feet (FIPS 3104) Plain Text</dd>
-                <dt class="f6 b">Latitude</dt>
+                <dt class="f6 b mt2">Latitude</dt>
                 <dd class="ml0">Latitude coordinate for Global Coordinate System, WGS 1984, decimal degrees (EPSG 4326) Number</dd>
-                <dt class="f6 b">Longitude</dt>
+                <dt class="f6 b mt2">Longitude</dt>
                 <dd class="ml0">Longitude coordinate for Global Coordinate System, WGS 1984, decimal degrees (EPSG 4326) Number</dd>
             </dl>
         </p>
     </section>
     
-    <section id="map" class="bg-wahed-red">
+    <section id="map" class="bg-wahed-red bb b--black-10">
         
-        <h2>Visualisation des données <img id="icone_titre" src="plot.png" height="50vh"></h2>
+        <h2>Visualisation des données <img id="icone_titre" src="icones/plot.png" height="50vh"></h2>
         
+        <p>juste pour voir</p>
         
     </section>
     
