@@ -1,6 +1,7 @@
 body {
     
     padding-left: 2%;
+    font-family: sans-serif;
 }
 
 
@@ -8,4 +9,10 @@ body {
     position: relative;
     top: 2vh;
     right: 1vh;
+}
+
+#icone_titre{
+    position: relative;
+    top: 3vh;
+    left: 2vh;
 }
