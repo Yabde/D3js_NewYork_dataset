@@ -7,21 +7,26 @@
     <title>Data Viz : Web</title>
 
     <link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css"/>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"/>
     <link rel="stylesheet" href="style.css"/>
     <link rel="shortcut icon" type="image/ico" href="icones/favicon.ico"/>
-    <!-- <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
-    <script src="//d3js.org/topojson.v1.min.js"></script> -->
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="auto.js"></script>
     
 </head>
 <body>
     
-    <header class="w-100 pa3 ph5-ns bg-white bb b--black-10">
+    <header class="w-100 bg-white bb b--black-10">
         <div class="db dt-ns mw9 center w-100">
             <div class="db dtc-ns v-mid tl w-50">
                 <img id="icone" src="icones/bullet.png" height="50vh">
                 <a href="/" class="dib f5 f4-ns fw6 mt0 mb1 link black-70" title="Home">
                     NYPD Shooting Incident Data (Historic)
-                </a>    
+                </a> 
+                <time id="Date" class="f6 db gray">Jan. 09, 2020</time>   
             </div>
         </div>
     </header>
@@ -30,7 +35,6 @@
         <h2>Quelques détails <img id="icone_titre" src="icones/detail.png" height="50vh"></h2>
         
         <!-- <p>Accéder au jeu de données initiale en cliquant <a href="https://data.cityofnewyork.us/api/views/833y-fsy8/rows.csv?accessType=DOWNLOADhttps://data.cityofnewyork.us/Public-Safety/NYPD-Shooting-Incident-Data-Historic-/833y-fsy8">ici</a></p> -->
-    
         
         <div class="pa4">
             <blockquote class="ml0 mt0 pl4 black-90 bl bw2 b--gold">
@@ -90,6 +94,46 @@
         
         <p>juste pour voir</p>
         
+    </section>
+
+    <section class="tableau center">
+        <table id="example" class="display" style="width: 100%;">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Extn.</th>
+                <th>Start date</th>
+                <th>Salary</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">TR-7</th>
+                <td>7</td>
+                <td>4,569</td>
+                <td>zed</td>
+                <td>azd</td>
+                <td>azdzd</td>
+                
+            </tr>
+            
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Extn.</th>
+                <th>Start date</th>
+                <th>Salary</th>
+            </tr>
+        </tfoot>
+
+
+    </table>
     </section>
     
 </body>

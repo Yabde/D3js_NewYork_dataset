@@ -1,20 +1,4 @@
-// var width = 960,
-//     height = 1160;
-
-// var projection = d3.geo.mercator()
-//     .scale(500)
-//     .translate([width / 2, height / 2]);
-
-// var path = d3.geo.path()
-//     .projection(projection);
-
-// var svg = d3.select("body").append("svg")
-//     .attr("width", width)
-//     .attr("height", height);
-
-// d3.json("uk.json", function(error, uk) {
-//   svg.append("path")
-//       .datum(topojson.feature(uk, uk.objects.subunits))
-//       .attr("d", path);
-// });
-
+$(document).ready(function() {
+    $('#example').DataTable( {
+    } );
+} );

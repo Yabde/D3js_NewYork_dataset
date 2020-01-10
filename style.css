@@ -4,6 +4,12 @@ body {
     font-family: sans-serif;
 }
 
+header {
+    padding-bottom: 1rem;
+    /* padding-left: 2rem;
+    padding-right: 2rem; */
+    padding-right: 25rem;
+}
 
 #icone {
     position: relative;
@@ -15,4 +21,9 @@ body {
     position: relative;
     top: 3vh;
     left: 2vh;
+}
+
+.tableau {
+    height: 10vh;
+    width: 85vh;
 }
