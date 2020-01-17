@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Exemple de cartes avec 3D.js</title>
+
+<style>
+
+.title {
+  display: inline-block;
+  font-size: 48px;
+  line-height: 90px;
+  text-align: center;
+}
+.map {
+    width: 1000px;
+}
+
+</style>
+
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://d3js.org/topojson.v1.min.js"></script>
+
+ <script src="./world-110m.js"></script>
+    
+</head>
+<body>
+<a href="http://bl.ocks.org/rveciana/f46df2272b289a9ce4e7">pris de là</a> et <a href="https://bl.ocks.org/mbostock/4282586">de là</a>     
+
+<div class="map"></div>
+<script>
+
+var diameter = 960 / 3,
+    radius = diameter / 2,
+    velocity = 0.01;
+
+var projection = d3.geoOrthographic()
+    .scale(radius - 2)
+    .translate([radius, radius])
+    .clipAngle(90)
+    .precision(0);
+
+d3.select(".map").selectAll(".title")
+  .data(["λ", "φ", "γ"])
+  .enter().append("div")
+    .attr("class", "title")
+    .style("width", diameter + "px")
+    .text(function(d) { return d; });
+
+var canvas = d3.select(".map").selectAll("canvas")
+  .data(d3.range(3))
+  .enter().append("canvas")
+    .datum(function() { return this.getContext("2d"); })
+    .attr("width", diameter)
+    .attr("height", diameter);
+
+var path = d3.geoPath()
+    .projection(projection);
+
+world = raw_data
+
+var land = topojson.feature(world, world.objects.land),
+  globe = {type: "Sphere"};
+
+
+color = d3.schemeCategory20;
+var countries = topojson.feature(world, world.objects.countries).features
+var neighbors = topojson.neighbors(world.objects.countries.geometries);
+
+
+countries.forEach(function(d, i) {
+    
+    //couleur de la france
+    // https://en.wikipedia.org/wiki/ISO_3166-1_numeric    
+    // if (d.id == 124) {
+    //     d.color=2;
+    // } else {
+    //     d.color=1;
+    // }
+    
+    // couleur différente de ses voisins
+    d.color = d3.max(neighbors[i], function(n) { return countries[n].color; }) + 1 | 0;
+});
+
+
+d3.timer(function(elapsed) {
+    var angle = velocity * elapsed;
+    canvas.each(function(context, i) {
+      var rotate = [0, 0, 0];
+      rotate[i] = angle, projection.rotate(rotate);
+      context.clearRect(0, 0, diameter, diameter);
+      context.beginPath(), path.context(context)(land), context.fill();
+      context.beginPath(), path(globe), context.stroke();
+      
+      countries.forEach(function(d, i) {
+                context.fillStyle = color[d.color];
+                context.beginPath();
+                path.context(context)(d);
+                context.fill();
+            });
+      
+    });
+});
+
+</script>
+</body>
+</html>    
+
+

@@ -1,14 +1,9 @@
 body {
     
-    padding-left: 2%;
+    /* padding-left: 2%; */
     font-family: sans-serif;
-}
-
-header {
-    padding-bottom: 1rem;
-    /* padding-left: 2rem;
-    padding-right: 2rem; */
-    padding-right: 25rem;
+    display: flex;
+    flex-direction: column;
 }
 
 #icone {
@@ -26,4 +21,28 @@ header {
 .tableau {
     height: 10vh;
     width: 85vh;
+    margin-bottom: 15vh;
+}
+
+#mapid { height: 180px; }
+
+path {
+
+  stroke: rgb(0, 0, 0);
+  stroke-width: .5;
+  stroke-dasharray: 1;
+  fill: #e48e0e;
+  
+}
+
+#neighborhoodPopover { 
+  position: absolute;     
+  text-align: center;         
+  padding: 2px;       
+  font: 12px sans-serif;    
+  background: #fff; 
+  border: 0px;    
+  border-radius: 8px;     
+  pointer-events: none;
+  opacity: 0;     
 }

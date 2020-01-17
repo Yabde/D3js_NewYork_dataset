@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Exemple de cartes avec 3D.js</title>
+
+<style>
+  .departements {
+    fill: none;
+    stroke: #fff;
+    stroke-linejoin: round;
+  }
+  
+  .tooltip {
+      position: absolute;
+      text-align: center;
+      color: black;
+      width: 275px;
+      height: 37px;
+      padding: 2px;
+      font: 12px sans-serif;
+      background: grey;
+      border: 0px;
+      border-radius: 8px;
+      pointer-events: none;
+  }
+</style>
+
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+    <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+    
+</head>
+<body>
+    <svg width="960" height="600"></svg>
+    <a href="https://www.datavis.fr/index.php?page=map-firststep">tiré de là</a>
+    <script>
+            
+    // The svg
+    var svg = d3.select("svg"),
+        width = +svg.attr("width"),
+        height = +svg.attr("height");
+
+    // Map and projection
+    var projection = d3.geoConicConformal()  //https://github.com/d3/d3-geo-projection
+            .center([2.454071, 46.279229])
+            .scale(2600)
+    .translate([width / 2, height / 2]);
+    var path = d3.geoPath()
+        .projection(projection);
+
+    // Data and color scale    
+    var data = d3.map();
+        
+    // https://github.com/d3/d3-scale-chromatic
+    var colors = d3.schemeCategory20; // http://bl.ocks.org/emmasaunders/f4902478bcfa411c77a412c02087bed4 
+
+    // Load external data and boot
+            
+    d3.queue()
+        .defer(d3.json, "http://francois.brucker.perso.centrale-marseille.fr/visible/departements.geojson")
+        .defer(d3.csv, "http://francois.brucker.perso.centrale-marseille.fr/visible/habitation.csv") //il faut un un htaccess
+        .await(ready);
+
+    function ready(error, topo, habitation) {
+        
+        if (error) throw error;
+
+        // association couleur et carte.
+        color_departement = {}
+        habitation.forEach(function(d) { 
+            color_departement[d.numéro] = d.années
+            // numéro dans le csv et années la properties
+            // console.log(d) 
+        })
+
+        var quantile = d3.scaleQuantile()
+            .domain([0, d3.max(habitation, function(e) { return +e.années; })])
+            .range(d3.range(9));
+
+        var div = d3.select("body").append("div")   
+            .attr("class", "tooltip")               
+            .style("opacity", 0);
+                        
+            // console.log(topo)
+                    
+        // Draw the map
+        svg.append("g")
+            .attr("class", "departements") //pour le css
+            .selectAll("path")
+            .data(topo.features)
+            .enter().append("path")
+                .attr("fill", function (d){
+
+
+                    var c = (quantile(parseInt(color_departement[d.properties.code])) + 1) || 0;
+                    return colors[c];
+                })
+                .on("mouseover", function(d) {
+                    div.transition()        
+                        .duration(200)
+                        .style("opacity", .9);      
+
+                    div.html("Département : " + d.properties.nom + "<br/>"
+                          +  "Numéro : " + d.properties.code+ "<br/>"
+                        + "Années = " + (color_departement[d.properties.code] || 0))  
+                        .style("left", (d3.event.pageX + 30) + "px")     
+                        .style("top", (d3.event.pageY - 30) + "px")
+                })
+                .on("mouseout", function(d) {
+                    div.style("opacity", 0);
+                    div.html("")
+                        .style("left", "-500px")
+                        .style("top", "-500px");
+                })                
+                .attr("d", path);
+            
+            
+        // http://bl.ocks.org/alansmithy/e984477a741bc56db5a5
+
+
+    }
+    </script>
+</body>
+</html>

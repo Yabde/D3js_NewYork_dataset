@@ -1,0 +1,14 @@
+{
+  "name": "@virtuacode/new-york-taxis-2014-2015",
+  "main": "7e70ce3b2e5a3321@512.js",
+  "version": "512.0.0",
+  "homepage": "https://observablehq.com/@virtuacode/new-york-taxis-2014-2015",
+  "author": {
+    "name": "Michael Schmidt",
+    "url": "https://observablehq.com/@virtuacode"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4"
+  }
+}

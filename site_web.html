@@ -9,132 +9,278 @@
     <link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css"/>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
     <link rel="stylesheet" href="style.css"/>
     <link rel="shortcut icon" type="image/ico" href="icones/favicon.ico"/>
 
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://d3js.org/topojson.v1.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
     <script src="auto.js"></script>
     
 </head>
 <body>
     
-    <header class="w-100 bg-white bb b--black-10">
+<header class="pl5 pt2 pb3 w-100 bg-white bb b--black-20">
         <div class="db dt-ns mw9 center w-100">
             <div class="db dtc-ns v-mid tl w-50">
                 <img id="icone" src="icones/bullet.png" height="50vh">
                 <a href="/" class="dib f5 f4-ns fw6 mt0 mb1 link black-70" title="Home">
                     NYPD Shooting Incident Data (Historic)
                 </a> 
-                <time id="Date" class="f6 db gray">Jan. 09, 2020</time>   
+                <time id="Date" class="f6 db gray">Jan. 18, 2020</time>   
             </div>
         </div>
     </header>
     
-    <section id="intro" class= "bg-washed-blue bb b--black-10"> 
-        <h2>Quelques détails <img id="icone_titre" src="icones/detail.png" height="50vh"></h2>
-        
-        <!-- <p>Accéder au jeu de données initiale en cliquant <a href="https://data.cityofnewyork.us/api/views/833y-fsy8/rows.csv?accessType=DOWNLOADhttps://data.cityofnewyork.us/Public-Safety/NYPD-Shooting-Incident-Data-Historic-/833y-fsy8">ici</a></p> -->
-        
-        <div class="pa4">
-            <blockquote class="ml0 mt0 pl4 black-90 bl bw2 b--gold">
-                <p class="f5 f4-m lh-copy mt0">
-                    List of every shooting incident that occurred in NYC going back to 2006 through the end of the previous calendar year.
-                    This is a breakdown of every shooting incident that occurred in NYC going back to 2006 through the end of the previous calendar year. This data is manually extracted every quarter and reviewed by the Office of Management Analysis and Planning before being posted on the NYPD website. Each record represents a shooting incident in NYC and includes information about the event, the location and time of occurrence. In addition, information related to suspect and victim demographics is also included. This data can be used by the public to explore the nature of shooting/criminal activity. Please refer to the attached data footnotes for additional information about this dataset.
-                </p>
-                <cite class="f6 tracked fs-normal">―Accéder au jeu de données initiale en cliquant <a href="https://data.cityofnewyork.us/api/views/833y-fsy8/rows.csv?accessType=DOWNLOADhttps://data.cityofnewyork.us/Public-Safety/NYPD-Shooting-Incident-Data-Historic-/833y-fsy8">ici</a></cite>
-            </blockquote>
+    <section id="intro" class= "pa3 bg-washed-gray bb bw1 b--black-80"> 
+
+        <div class="fl w-50">
+
+            <h2>Quelques détails <img id="icone_titre" src="icones/detail.png" height="50vh"></h2>
+            
+            <!-- <p>Accéder au jeu de données initiale en cliquant <a href="https://data.cityofnewyork.us/api/views/833y-fsy8/rows.csv?accessType=DOWNLOADhttps://data.cityofnewyork.us/Public-Safety/NYPD-Shooting-Incident-Data-Historic-/833y-fsy8">ici</a></p> -->
+            
+            <div class="pa4">
+                <blockquote class="ml0 mt0 pl4 black-90 bl bw2 b--gold">
+                    <p class="f5 f4-m lh-copy mt0 measure-wide">
+                        List of every shooting incident that occurred in NYC going back to 2006 through the end of the previous calendar year.
+                        This is a breakdown of every shooting incident that occurred in NYC going back to 2006 through the end of the previous calendar year. This data is manually extracted every quarter and reviewed by the Office of Management Analysis and Planning before being posted on the NYPD website. Each record represents a shooting incident in NYC and includes information about the event, the location and time of occurrence. In addition, information related to suspect and victim demographics is also included. This data can be used by the public to explore the nature of shooting/criminal activity. Please refer to the attached data footnotes for additional information about this dataset.
+                    </p>
+                    <cite class="f6 tracked fs-normal">―Accéder au jeu de données initiale en cliquant <a href="https://data.cityofnewyork.us/Public-Safety/NYPD-Shooting-Incident-Data-Historic-/833y-fsy8">ici</a></cite>
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="fl w-50">
+            <h2>Représentation Spatial <img id="icone_titre" src="icones/world.png" height="50vh"></h2>
+            
+            <svg width="960" height="720"></svg>
+            <div id='neighborhoodPopover'> </div>
+            <script>
+                var svg = d3.select("svg"),
+    width = +svg.attr("width"),
+    height = +svg.attr("height");
+
+var colors = d3.schemeCategory20;
+
+// http://data.beta.nyc//dataset/0ff93d2d-90ba-457c-9f7e-39e47bf2ac5f/resource/35dd04fb-81b3-479b-a074-a27a37888ce7/download/d085e2f8d0b54d4590b1e7d1f35594c1pediacitiesnycneighborhoods.geojson
+d3.json("nyc_zip_code_tabulation_areas_polygons.geojson", function(error, nyc) {
+  if (error) throw error;
+
+  var path = d3.geoPath()
+      .projection(d3.geoConicConformal()
+      .parallels([33, 45])
+      .rotate([96, -39])
+      .fitSize([width, height], nyc));
+
+  svg.selectAll("path")
+      .data(nyc.features)
+      .enter().append("path")
+        .attr('fill', function(d) {
+            // number = {}
+            // number[d.properties.city_fips] = parseInt()
+            
+            return colors[parseInt(d.properties.city_fips)];
+         })
+      .attr("d", path)
+      .on("mouseenter", function(d) {
+        console.log(d);
+      d3.select(this)
+      .style("stroke-width", 1.5)
+      .style("stroke-dasharray", 0)
+
+      d3.select("#neighborhoodPopover")
+      .transition()
+      .style("opacity", 1)
+      .style("left", (d3.event.pageX) + "px")
+      .style("top", (d3.event.pageY) + "px")
+      .text(d.properties.po_name)
+
+    })
+    .on("mouseleave", function(d) { 
+      d3.select(this)
+      .style("stroke-width", .25)
+      .style("stroke-dasharray", 1)
+
+      d3.select("#cneighborhoodPopoverountyText")
+      .transition()
+      .style("opacity", 0);
+    });
+
+    console.log(nyc);
+});
+            </script>
+
         </div>
         
-        <p>
-            <dl class="lh-title pa4 mt0">
-                <dt class="f6 b mt2">INCIDENT_KEY</dt>
-                <dd class="ml0">Randomly generated persistent ID for each arrest Plain Text</dd>
-                <dt class="f6 b mt2">OCCUR_DATE</dt>
-                <dd class="ml0">Exact date of the shooting incident Date & Time</dd>
-                <dt class="f6 b mt2">OCCUR_TIME</dt>
-                <dd class="ml0">Exact time of the shooting incident Plain Text</dd>
-                <dt class="f6 b mt2">BORO</dt>
-                <dd class="ml0">Borough where the shooting incident occurred Plain Text</dd>
-                <dt class="f6 b mt2">PRECINCT</dt>
-                <dd class="ml0">CherryPrecinct where the shooting incident occurred Number</dd>
-                <dt class="f6 b mt2">JURISDICTION_CODE</dt>
-                <dd class="ml0">Jurisdiction where the shooting incident occurred. Jurisdiction codes 0(Patrol), 1(Transit) and 2(Housing) represent NYPD whilst codes 3 and more represent non NYPD jurisdictions Number</dd>
-                <dt class="f6 b mt2">LOCATION_DESC</dt>
-                <dd class="ml0">Location of the shooting incident Plain Text</dd>
-                <dt class="f6 b mt2">STATISTICAL_MURDER_FLAG</dt>
-                <dd class="ml0">Shooting resulted in the victim’s death which would be counted as a murder Checkbox</dd>
-                <dt class="f6 b mt2">PERP_AGE_GROUP</dt>
-                <dd class="ml0">Perpetrator’s age within a category Plain Text</dd>
-                <dt class="f6 b mt2">PERP_SEX</dt>
-                <dd class="ml0">Perpetrator’s sex description Plain Text</dd>
-                <dt class="f6 b mt2">PERP_RACE</dt>
-                <dd class="ml0">Perpetrator’s race description Plain Text</dd>
-                <dt class="f6 b mt2">VIC_AGE_GROUP</dt>
-                <dd class="ml0">Victim’s age within a category Plain Text</dd>
-                <dt class="f6 b mt2">VIC_SEX</dt>
-                <dd class="ml0">Victim’s sex description Plain Text</dd>
-                <dt class="f6 b mt2">VIC_RACE</dt>
-                <dd class="ml0">Victim’s race description Plain Text</dd>
-                <dt class="f6 b mt2">X_COORD_CD</dt>
-                <dd class="ml0">Midblock X-coordinate for New York State Plane Coordinate System, Long Island Zone, NAD 83, units feet (FIPS 3104) Plain Text</dd>
-                <dt class="f6 b mt2">Y_COORD_CD</dt>
-                <dd class="ml0">Midblock Y-coordinate for New York State Plane Coordinate System, Long Island Zone, NAD 83, units feet (FIPS 3104) Plain Text</dd>
-                <dt class="f6 b mt2">Latitude</dt>
-                <dd class="ml0">Latitude coordinate for Global Coordinate System, WGS 1984, decimal degrees (EPSG 4326) Number</dd>
-                <dt class="f6 b mt2">Longitude</dt>
-                <dd class="ml0">Longitude coordinate for Global Coordinate System, WGS 1984, decimal degrees (EPSG 4326) Number</dd>
-            </dl>
-        </p>
+
+
     </section>
     
-    <section id="map" class="bg-wahed-red bb b--black-10">
+    <section id="map" class="pl4 pr4 pb4 pt2 bg-gold bb bw1 b--black-80">
         
-        <h2>Visualisation des données <img id="icone_titre" src="icones/plot.png" height="50vh"></h2>
-        
-        <p>juste pour voir</p>
-        
-    </section>
+        <section class="fl w-50">
 
-    <section class="tableau center">
-        <table id="example" class="display" style="width: 100%;">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Office</th>
-                <th>Extn.</th>
-                <th>Start date</th>
-                <th>Salary</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th scope="row">TR-7</th>
-                <td>7</td>
-                <td>4,569</td>
-                <td>zed</td>
-                <td>azd</td>
-                <td>azdzd</td>
-                
-            </tr>
+        <h2 class="pb3">Significations des données <img id="icone_titre" src="icones/plot.png" height="50vh"></h2>
+        
+            <div class="measure-wide bb bt bl br b--dashed bw1 br4 br--right">
+    
+                <p>
+                    <dl class="lh-title pa4 mt0">
+                    <dt class="f6 b mt2">INCIDENT_KEY</dt>
+                    <dd class="ml0">Randomly generated persistent ID for each arrest Plain Text</dd>
+                    <dt class="f6 b mt2">OCCUR_DATE</dt>
+                    <dd class="ml0">Exact date of the shooting incident Date & Time</dd>
+                    <dt class="f6 b mt2">OCCUR_TIME</dt>
+                    <dd class="ml0">Exact time of the shooting incident Plain Text</dd>
+                    <dt class="f6 b mt2">BORO</dt>
+                    <dd class="ml0">Borough where the shooting incident occurred Plain Text</dd>
+                    <dt class="f6 b mt2">PRECINCT</dt>
+                    <dd class="ml0">CherryPrecinct where the shooting incident occurred Number</dd>
+                    <dt class="f6 b mt2">JURISDICTION_CODE</dt>
+                    <dd class="ml0">Jurisdiction where the shooting incident occurred. Jurisdiction codes 0(Patrol), 1(Transit) and 2(Housing) represent NYPD whilst codes 3 and more represent non NYPD jurisdictions Number</dd>
+                    <dt class="f6 b mt2">LOCATION_DESC</dt>
+                    <dd class="ml0">Location of the shooting incident Plain Text</dd>
+                    <dt class="f6 b mt2">STATISTICAL_MURDER_FLAG</dt>
+                    <dd class="ml0">Shooting resulted in the victim’s death which would be counted as a murder Checkbox</dd>
+                    <dt class="f6 b mt2">PERP_AGE_GROUP</dt>
+                    <dd class="ml0">Perpetrator’s age within a category Plain Text</dd>
+                    <dt class="f6 b mt2">PERP_SEX</dt>
+                    <dd class="ml0">Perpetrator’s sex description Plain Text</dd>
+                    <dt class="f6 b mt2">PERP_RACE</dt>
+                    <dd class="ml0">Perpetrator’s race description Plain Text</dd>
+                    <dt class="f6 b mt2">VIC_AGE_GROUP</dt>
+                    <dd class="ml0">Victim’s age within a category Plain Text</dd>
+                    <dt class="f6 b mt2">VIC_SEX</dt>
+                    <dd class="ml0">Victim’s sex description Plain Text</dd>
+                    <dt class="f6 b mt2">VIC_RACE</dt>
+                    <dd class="ml0">Victim’s race description Plain Text</dd>
+                    <dt class="f6 b mt2">X_COORD_CD</dt>
+                    <dd class="ml0">Midblock X-coordinate for New York State Plane Coordinate System, Long Island Zone, NAD 83, units feet (FIPS 3104) Plain Text</dd>
+                    <dt class="f6 b mt2">Y_COORD_CD</dt>
+                    <dd class="ml0">Midblock Y-coordinate for New York State Plane Coordinate System, Long Island Zone, NAD 83, units feet (FIPS 3104) Plain Text</dd>
+                    <dt class="f6 b mt2">Latitude</dt>
+                    <dd class="ml0">Latitude coordinate for Global Coordinate System, WGS 1984, decimal degrees (EPSG 4326) Number</dd>
+                    <dt class="f6 b mt2">Longitude</dt>
+                    <dd class="ml0">Longitude coordinate for Global Coordinate System, WGS 1984, decimal degrees (EPSG 4326) Number</dd>
+                </dl>
+            </p>
+        </div>
+        </section>
+
+        <section class="fl w-50">
             
-        </tbody>
+            <section>
+            
+                <h2>Quelques Valeurs <img id="icone_titre" src="icones/headshot.png" height="50vh"></h2>
+                
+                <div class="flex bb bt bl br b--dashed bw1 br4 br--left">
 
-        <tfoot>
-            <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Office</th>
-                <th>Extn.</th>
-                <th>Start date</th>
-                <th>Salary</th>
-            </tr>
-        </tfoot>
+                    <div class="tableau center">
+                        
+                        <table id="example" class="display" style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Position</th>
+                                    <th>Office</th>
+                                    <th>Extn.</th>
+                                    <th>Start date</th>
+                                    <th>Salary</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">TR-7</th>
+                                <td>7</td>
+                                <td>4,569</td>
+                                <td>zed</td>
+                                <td>azd</td>
+                                <td>azdzd</td>
+                                
+                            </tr>
+                            
+                        </tbody>
+                        
+                        <tfoot>
+                            <tr>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Office</th>
+                                <th>Extn.</th>
+                                <th>Start date</th>
+                                <th>Salary</th>
+                            </tr>
+                        </tfoot>
+                        
+                    </table>
+                </div>
+            </div>
+            </section>
+            
+        </section>
 
-
-    </table>
+        
     </section>
     
+    
+    <section class="pl4 pr4 pb4 pt2 bg-light-red bb bw1 b--black-80">
+        
+        <h2>Figures <img id="icone_titre" src="icones/tireur.png" height="50vh"></h2>
+
+        <div>
+
+            <section class="fl pt4 w-40 pl2">
+                <div class="measure-wide bb bt bl br b--dashed bw1 br4 br--right">
+                    <p><h4>Brooklyn et le Bronx sont les deux destinations avec le plus de tirs</h4></p>
+                </div>
+            </section>
+            <section class="fl w-50 measure">
+                <p>
+                    <iframe src="https://data.cityofnewyork.us/dataset/nombre-de-shoot-selon-precinct/2mvs-6qhv/embed?width=800&height=600" width="800" height="600">
+                    </iframe>
+                </p>
+                
+            </section>
+            
+        </div>
+
+        <div>
+            <section class="fl pt4 w-40 pl2">
+                <div class="measure-wide bb bt bl br b--dashed bw1 br4 br--right">
+                    <p><h4>Pas mal d'oppresseurs qui réussissent à s'échapper</h4></p>
+                </div>
+            </section>
+
+            <section class="fl w-50">
+                
+                <iframe src="https://data.cityofnewyork.us/dataset/quartier_race_oppr/duri-2r34/embed?width=800&height=600" width="800" height="600" style="border:0; padding: 0; margin: 0;">
+                </iframe>
+                
+            </section>
+            
+        </div>
+        
+        <div>
+            <section class="fl pt4 w-40 pl2">
+                <div class="measure-wide bb bt bl br b--dashed bw1 br4 br--right">
+                    <p><h4>Eviter les sorties en été...</h4></p>
+                </div>
+            </section>
+
+            <section class="fl w-50">
+                <iframe src="https://data.cityofnewyork.us/dataset/nombre-de-tire-par-date/5b6k-jyb8/embed?width=800&height=600" width="800" height="600" style="border:0; padding: 0; margin: 0;">
+                </iframe>
+            </section>
+
+
+        </div>
+
+    </section>   
+
 </body>
 </html>
