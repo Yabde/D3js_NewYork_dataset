@@ -1,17 +1,15 @@
-# Data-Analytics
+# Data-Analytics  
 Site Web avec présentation d'un set de données (D3.js, panda, tachyons...).  
 New York City : Shooting Incident Data (Historic).  
 https://data.cityofnewyork.us/Public-Safety/NYPD-Shooting-Incident-Data-Historic-/833y-fsy8
 
 
-## Yassine Abderrahmani 
+## Yassine Abderrahmani   
 
+<b>site_web.html</b> accessible à l'adresse :  
 ## http://yabderrahman.perso.centrale-marseille.fr/visible/Site%20Web/site_web.html
 
 ### Remarques :
-
-Il y a un nombre MAX de requêtes possibles qui est de : 250 toutes les 12H ... 
-Cela créer une erreur 'internet' dans l'application si elle est atteinte et Google nous empêche d'y accéder.
 
 - **CSS**
     - Tachyons.io
